@@ -10,32 +10,38 @@
     <div id="app">
         <div id="auth-screen" class="screen">
             <h1>🕵️‍♂️ Impostor Tomas</h1>
-            <input type="text" id="username" placeholder="Twoje imię..." maxlength="12">
+            <input type="text" id="username" placeholder="Twoje imię...">
             <button onclick="createRoom()">Stwórz Pokój</button>
             <hr>
-            <input type="text" id="roomCode" placeholder="Kod pokoju (np. ABCD)">
-            <button onclick="joinRoom()">Dołącz do Gry</button>
+            <input type="text" id="roomCode" placeholder="Kod pokoju">
+            <button onclick="joinRoom()">Dołącz</button>
         </div>
 
         <div id="lobby-screen" class="screen hidden">
-            <h2>Pokój: <span id="displayCode"></span> <button onclick="copyCode()">📋</button></h2>
+            <h2>Pokój: <span id="displayCode"></span></h2>
             <div id="player-list"></div>
-            <select id="category-select">
-                <option value="ogolna10">Ogólna 10+ (Łatwa)</option>
-                <option value="ogolna16">Ogólna 16+ (Trudna)</option>
-                <option value="ekstraklasa">⚽ Ekstraklasa</option>
-                <option value="bajki">🏰 Bajki Disney/Pixar</option>
-            </select>
-            <button id="start-btn" onclick="startGame()">START GRY</button>
+            <div id="host-controls" class="hidden">
+                <select id="category-select">
+                    <option value="ogolna10">Ogólna 10+</option>
+                    <option value="ogolna16">Ogólna 16+</option>
+                    <option value="ekstraklasa">⚽ Ekstraklasa</option>
+                    <option value="bajki">🏰 Bajki</option>
+                </select>
+                <button onclick="startGame()">START GRY</button>
+            </div>
+            <p id="wait-msg">Czekanie na hosta...</p>
         </div>
 
         <div id="game-screen" class="screen hidden">
-            <div id="word-box">TWOJE SŁOWO: <span id="the-word">???</span></div>
+            <div id="word-box">TWOJE SŁOWO: <span id="the-word"></span></div>
             <div id="timer">Czas: 120s</div>
+            <div id="host-game-controls" class="hidden">
+                <button onclick="triggerVoting()" style="background: #ff9800;">Zakończ rundę i głosuj 🗳️</button>
+            </div>
             <div id="chat-box"></div>
             <div id="chat-input-area">
-                <input type="text" id="chat-msg" placeholder="Pisz tutaj...">
-                <button onclick="sendMsg()">Wysłań</button>
+                <input type="text" id="chat-msg" placeholder="Napisz coś...">
+                <button onclick="sendMsg()">Wyślij</button>
             </div>
             <div id="voting-area" class="hidden">
                 <h3>Kto jest Impostorem?</h3>
@@ -45,9 +51,10 @@
 
         <div id="result-screen" class="screen hidden">
             <h1 id="winner-text"></h1>
-            <p>Słowo to: <b id="reveal-word"></b></p>
-            <p>Impostorem był: <b id="reveal-impostor"></b></p>
-            <button onclick="location.reload()">Powrót do menu</button>
+            <p>Słowo: <b id="reveal-word"></b> | Impostor: <b id="reveal-impostor"></b></p>
+            <div id="host-restart" class="hidden">
+                <button onclick="restartGame()">Nowa Runda (Lobby)</button>
+            </div>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
