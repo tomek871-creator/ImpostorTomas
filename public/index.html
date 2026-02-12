@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostor Tomas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="auth-screen" class="screen">
+            <h1>🕵️‍♂️ Impostor Tomas</h1>
+            <input type="text" id="username" placeholder="Twoje imię..." maxlength="12">
+            <button onclick="createRoom()">Stwórz Pokój</button>
+            <hr>
+            <input type="text" id="roomCode" placeholder="Kod pokoju (np. ABCD)">
+            <button onclick="joinRoom()">Dołącz do Gry</button>
+        </div>
+
+        <div id="lobby-screen" class="screen hidden">
+            <h2>Pokój: <span id="displayCode"></span> <button onclick="copyCode()">📋</button></h2>
+            <div id="player-list"></div>
+            <select id="category-select">
+                <option value="ogolna10">Ogólna 10+ (Łatwa)</option>
+                <option value="ogolna16">Ogólna 16+ (Trudna)</option>
+                <option value="ekstraklasa">⚽ Ekstraklasa</option>
+                <option value="bajki">🏰 Bajki Disney/Pixar</option>
+            </select>
+            <button id="start-btn" onclick="startGame()">START GRY</button>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div id="word-box">TWOJE SŁOWO: <span id="the-word">???</span></div>
+            <div id="timer">Czas: 120s</div>
+            <div id="chat-box"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-msg" placeholder="Pisz tutaj...">
+                <button onclick="sendMsg()">Wysłań</button>
+            </div>
+            <div id="voting-area" class="hidden">
+                <h3>Kto jest Impostorem?</h3>
+                <div id="vote-buttons"></div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen hidden">
+            <h1 id="winner-text"></h1>
+            <p>Słowo to: <b id="reveal-word"></b></p>
+            <p>Impostorem był: <b id="reveal-impostor"></b></p>
+            <button onclick="location.reload()">Powrót do menu</button>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
